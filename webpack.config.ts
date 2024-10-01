@@ -21,7 +21,7 @@ export default (env: EnvVariables) => {
     devServer: isDev && devServer,
     devtool: isDev && "inline-source-map",
     mode: env.mode ?? "development",
-    entry: path.resolve(__dirname, "src", "index.ts"),
+    entry: path.resolve(__dirname, "src", "index.tsx"),
     output: {
       path: path.resolve(__dirname, "build"),
       filename: "[name].[contenthash].js", //name == entry (по дефолту main, иначе свое название)
