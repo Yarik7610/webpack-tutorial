@@ -1,4 +1,5 @@
 import HtmlWebpackPlugin from "html-webpack-plugin"
+import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import path from "path"
 import webpack from "webpack"
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server"
@@ -27,9 +28,20 @@ export default (env: EnvVariables) => {
       filename: "[name].[contenthash].js", //name == entry (по дефолту main, иначе свое название)
       clean: true
     },
-    plugins: [new HtmlWebpackPlugin({ template: path.resolve(__dirname, "public", "index.html") })],
+    plugins: [
+      new HtmlWebpackPlugin({ template: path.resolve(__dirname, "public", "index.html") }),
+      !isDev &&
+        new MiniCssExtractPlugin({
+          filename: "css/[name].[contenthash:8].css",
+          chunkFilename: "css/[name].[contenthash:8].css"
+        })
+    ],
     module: {
       rules: [
+        {
+          test: /\.s[ac]ss$/i,
+          use: [isDev ? "style-loader" : MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+        },
         {
           test: /\.tsx?$/,
           use: "ts-loader",
