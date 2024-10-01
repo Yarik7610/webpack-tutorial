@@ -1,8 +1,14 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const path = require("path")
+import HtmlWebpackPlugin from "html-webpack-plugin"
+import path from "path"
+import webpack from "webpack"
 
-module.exports = (env) => {
-  return {
+type Mode = "production" | "development"
+interface EnvVariables {
+  mode: Mode
+}
+
+export default (env: EnvVariables) => {
+  const config: webpack.Configuration = {
     mode: env.mode ?? "development",
     entry: path.resolve(__dirname, "src", "index.ts"),
     output: {
@@ -24,4 +30,5 @@ module.exports = (env) => {
       extensions: [".tsx", ".ts", ".js"]
     }
   }
+  return config
 }
