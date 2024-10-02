@@ -12,7 +12,7 @@ export const buildWebpack = (options: BuildOptions): webpack.Configuration => {
   return {
     devServer: isDev && buildWebServer(options),
     devtool: isDev && "inline-source-map",
-    mode: mode ?? "development",
+    mode: mode,
     entry: paths.entry,
     output: {
       path: paths.output,
